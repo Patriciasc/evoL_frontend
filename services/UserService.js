@@ -11,10 +11,19 @@ const usersAPI = axios.create({
 
 export default {
   signup(signupInfo) {
-    console.log('loginFunction')
-    console.log(signupInfo)
     const response = usersAPI
       .post('/auth/signup', signupInfo)
+      .then((response) => {
+        localStorage.setItem('name', response.data.name)
+        localStorage.setItem('email', response.data.email)
+        localStorage.setItem('token', response.data.token)
+      })
+      .catch((err) => console.error(err))
+    return response
+  },
+  login(loginInfo) {
+    const response = usersAPI
+      .post('/auth/login', loginInfo)
       .then((response) => {
         localStorage.setItem('name', response.data.name)
         localStorage.setItem('email', response.data.email)
