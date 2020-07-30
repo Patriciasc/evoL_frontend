@@ -41,7 +41,6 @@
 
     <v-text-field
       v-model.trim="telephone"
-      :error-messages="telephoneErrors"
       label="Número de teléfono"
       @input="$v.name.$touch()"
       @blur="$v.name.$touch()"
@@ -55,6 +54,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email, sameAs } from 'vuelidate/lib/validators'
+import UserService from '@/services/UserService.js'
 
 export default {
   mixins: [validationMixin],
@@ -110,6 +110,16 @@ export default {
   methods: {
     submit() {
       this.$v.$touch()
+
+      console.log('submitMethod')
+      const signupInfo = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        telephone: this.telephone,
+      }
+
+      UserService.signup(signupInfo)
     },
     clear() {
       this.$v.$reset()
@@ -117,6 +127,7 @@ export default {
       this.email = ''
       this.password = ''
       this.repeatPassword = ''
+      this.telephone = ''
     },
   },
 }
