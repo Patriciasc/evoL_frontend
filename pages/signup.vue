@@ -25,8 +25,8 @@
       type="password"
       label="* Contraseña"
       required
-      @input="$v.name.$touch()"
-      @blur="$v.name.$touch()"
+      @input="$v.password.$touch()"
+      @blur="$v.password.$touch()"
     ></v-text-field>
 
     <v-text-field
@@ -35,15 +35,15 @@
       type="password"
       label="* Repite la contraseña"
       required
-      @input="$v.name.$touch()"
-      @blur="$v.name.$touch()"
+      @input="$v.repeatPassword.$touch()"
+      @blur="$v.repeatPassword.$touch()"
     ></v-text-field>
 
     <v-text-field
       v-model.trim="telephone"
       label="Número de teléfono"
-      @input="$v.name.$touch()"
-      @blur="$v.name.$touch()"
+      @input="$v.telephone.$touch()"
+      @blur="$v.telephone.$touch()"
     ></v-text-field>
 
     <v-btn class="mr-4" @click="submit">submit</v-btn>
