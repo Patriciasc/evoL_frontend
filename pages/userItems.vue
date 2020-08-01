@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-space-between flex-wrap">
+  <div class="d-flex flex-wrap">
     <!--Tus publicaciones-->
     <Item v-for="(item, idx) in userItems" :key="idx" :item="item" />
   </div>
