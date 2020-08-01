@@ -1,95 +1,71 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation </a
-            >.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br />
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire">
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+  <div>
+    <v-tabs
+      v-model="tab"
+      show-arrows
+      centered
+      icons-and-text
+      center-active
+      flat
+      grow
+    >
+      <v-tabs-slider color="red"></v-tabs-slider>
+
+      <v-tab href="#tab-1">
+        Todo
+        <v-icon>mdi-circle-slice-8</v-icon>
+      </v-tab>
+
+      <v-tab href="#tab-2">
+        Libros
+        <v-icon>mdi-book-open-page-variant</v-icon>
+      </v-tab>
+
+      <v-tab href="#tab-3">
+        Material
+        <v-icon>mdi-content-cut</v-icon>
+      </v-tab>
+      <v-tab href="#tab-4">
+        Ropa
+        <v-icon>mdi-hanger</v-icon>
+      </v-tab>
+
+      <v-tab href="#tab-5">
+        Juguetes
+        <v-icon>mdi-racquetball</v-icon>
+      </v-tab>
+    </v-tabs>
+
+    <v-text-field
+      v-model="searchTerm"
+      clearable
+      class="mx-1 my-2"
+      flat
+      hide-details
+      label="Search"
+      prepend-inner-icon="mdi-magnify"
+      solo-inverted
+      @keydown.enter="onSearchItem"
+    ></v-text-field>
+  </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
 export default {
-  components: {
-    Logo,
-    VuetifyLogo,
+  data: () => ({
+    searchTerm: '',
+    tab: null,
+  }),
+  methods: {
+    onSearchItem() {
+      console.log(this.searchTerm)
+      console.log(this.tab)
+      this.searchTerm = ''
+    },
   },
 }
 </script>
+
+<style lang="scss" scoped>
+//TODO
+</style>
