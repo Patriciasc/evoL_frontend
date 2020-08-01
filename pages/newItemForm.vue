@@ -22,12 +22,13 @@
         label="Ponle un precio si quieres. Si lo dejas en blanco vacío, entendemos que quieres hacer un regalo"
       ></v-text-field>
 
-      <v-btn class="mr-4" @click="publishItem">Publicar</v-btn>
+      <v-btn class="mr-4" @click="createItem">Publicar</v-btn>
     </v-form>
   </div>
 </template>
 
 <script>
+import ItemService from '@/services/ItemService.js'
 import ImagePicker from '~/components/ImagePicker'
 
 export default {
@@ -44,8 +45,17 @@ export default {
     url: null,
   }),
   methods: {
-    publishItem() {
-      console.log('publishItem')
+    createItem() {
+      console.log('newItemForm: createItem')
+      const newItem = {
+        imageURL: 'https://picsum.photos/id/237/200/500',
+        title: 'La vida es bella',
+        description: 'Un libro maravilloso y muy educativo',
+        category: '1234',
+        state: 'Libros',
+        price: 2,
+      }
+      ItemService.createItem(newItem)
     },
   },
 }
