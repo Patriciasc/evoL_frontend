@@ -1,23 +1,36 @@
 <template>
   <div>
     <v-form ref="form">
-      <ImagePicker />
-      <v-text-field type="text" label="Ponle un Título"></v-text-field>
+      <ImagePicker v-model="imageURL" />
 
       <v-text-field
+        v-model="title"
+        type="text"
+        label="Ponle un Título"
+      ></v-text-field>
+
+      <v-text-field
+        v-model="description"
         type="text"
         label="Escribe una breve descripción"
       ></v-text-field>
 
       <v-select
+        v-model="category"
         type="text"
         :items="categories"
         label="Elige una categoría"
       ></v-select>
 
-      <v-select type="text" :items="states" label="Estado"></v-select>
+      <v-select
+        v-model="state"
+        type="text"
+        :items="states"
+        label="Estado"
+      ></v-select>
 
       <v-text-field
+        v-model="price"
         type="number"
         label="Ponle un precio si quieres. Si lo dejas en blanco vacío, entendemos que quieres hacer un regalo"
       ></v-text-field>
@@ -34,6 +47,12 @@ import ImagePicker from '~/components/ImagePicker'
 export default {
   components: { ImagePicker },
   data: () => ({
+    imageURL: 'https://picsum.photos/200/500',
+    title: '',
+    description: '',
+    category: '',
+    state: '',
+    price: 0,
     categories: [
       'Todas las categorías',
       'Libros',
@@ -46,16 +65,20 @@ export default {
   }),
   methods: {
     createItem() {
-      console.log('newItemForm: createItem')
       const newItem = {
-        imageURL: 'https://picsum.photos/id/237/200/500',
-        title: 'La vida es bella',
-        description: 'Un libro maravilloso y muy educativo',
-        category: '1234',
-        state: 'Libros',
-        price: 2,
+        imageURL: this.imageURL.name,
+        title: this.title,
+        description: this.description,
+        category: this.category,
+        state: this.state,
+        price: this.price,
       }
       ItemService.createItem(newItem)
+        .then(() => {
+          console.log('newItemForm: Item was created')
+          this.$router.push('/')
+        })
+        .catch((error) => console.error(error))
     },
   },
 }

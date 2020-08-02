@@ -11,14 +11,11 @@ const itemsAPI = axios.create({
 })
 
 export default {
-  createItem(newItem) {
-    const response = itemsAPI
-      .post('/', newItem)
-      .then((response) => {
-        console.log('itemService: Item was created')
-      })
-      .catch((err) => console.error(err))
-    return response
+  async createItem(newItem) {
+    console.log('ItemService: createItem')
+    console.log(newItem)
+    const response = await itemsAPI.post('/', newItem)
+    return response.data
   },
   async getMyItems() {
     console.log('ItemService: getMyItems')
