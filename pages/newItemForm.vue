@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-form ref="form">
-      <ImagePicker v-model="imageURL" />
+      <ImagePicker v-model="imageName" @imageURL="setImageURL" />
 
       <v-text-field
         v-model="title"
@@ -47,7 +47,8 @@ import ImagePicker from '~/components/ImagePicker'
 export default {
   components: { ImagePicker },
   data: () => ({
-    imageURL: 'https://picsum.photos/200/500',
+    imageName: '',
+    imageURL: '',
     title: '',
     description: '',
     category: '',
@@ -66,7 +67,7 @@ export default {
   methods: {
     createItem() {
       const newItem = {
-        imageURL: this.imageURL.name,
+        imageURL: this.imageURL,
         title: this.title,
         description: this.description,
         category: this.category,
@@ -75,10 +76,12 @@ export default {
       }
       ItemService.createItem(newItem)
         .then(() => {
-          console.log('newItemForm: Item was created')
-          this.$router.push('/')
+          this.$router.push('/userItems')
         })
         .catch((error) => console.error(error))
+    },
+    setImageURL(imageURL) {
+      this.imageURL = imageURL
     },
   },
 }
