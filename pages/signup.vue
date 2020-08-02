@@ -42,8 +42,6 @@
     <v-text-field
       v-model.trim="telephone"
       label="Número de teléfono"
-      @input="$v.telephone.$touch()"
-      @blur="$v.telephone.$touch()"
     ></v-text-field>
 
     <v-btn class="mr-4" @click="submit">submit</v-btn>

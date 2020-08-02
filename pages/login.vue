@@ -19,6 +19,7 @@
       @blur="$v.password.$touch()"
     ></v-text-field>
 
+    <v-btn color="primary" nuxt to="/signup"> Sign up </v-btn>
     <v-btn class="mr-4" @click="submit">submit</v-btn>
   </form>
 </template>
