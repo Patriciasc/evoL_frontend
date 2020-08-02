@@ -60,6 +60,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/firebase',
   ],
   /*
    ** Axios module configuration
@@ -92,4 +93,27 @@ export default {
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {},
+
+  /*
+   ** Nuxt-Fire config options
+   */
+  firebase: {
+    config: {
+      apiKey: 'AIzaSyCoC1FOxeba_N5vE0p7HMH9vgbZ6YcTWYI',
+      authDomain: 'evolimageuploader.firebaseapp.com',
+      databaseURL: 'https://evolimageuploader.firebaseio.com',
+      projectId: 'evolimageuploader',
+      storageBucket: 'evolimageuploader.appspot.com',
+      messagingSenderId: '1054223520738',
+      appId: '1:1054223520738:web:df8ca61c97798529c69fbb',
+      measurementId: 'G-G0E79C18VY',
+    },
+    services: {
+      auth: true, // Just as example. Can be any other service.
+      storage: true,
+      realtimeDb: true,
+      performance: true,
+      analytics: true,
+    },
+  },
 }
