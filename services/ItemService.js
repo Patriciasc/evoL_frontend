@@ -12,14 +12,18 @@ const itemsAPI = axios.create({
 
 export default {
   async createItem(newItem) {
-    console.log('ItemService: createItem')
-    console.log(newItem)
     const response = await itemsAPI.post('/', newItem)
     return response.data
   },
   async getMyItems() {
-    console.log('ItemService: getMyItems')
     const response = await itemsAPI.get('/me')
+    return response.data
+  },
+  async getItems(category) {
+    let params = ''
+    if (category !== 'All') params = `?category=${category}`
+
+    const response = await itemsAPI.get(`/${params}`)
     return response.data
   },
 }

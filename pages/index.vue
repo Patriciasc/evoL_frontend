@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Category tabs -->
     <v-tabs
       v-model="tab"
       show-arrows
@@ -8,34 +9,36 @@
       center-active
       flat
       grow
+      @change="onTabChanged"
     >
       <v-tabs-slider color="red"></v-tabs-slider>
 
-      <v-tab href="#tab-1">
+      <v-tab href="#All">
         Todo
         <v-icon>mdi-circle-slice-8</v-icon>
       </v-tab>
 
-      <v-tab href="#tab-2">
+      <v-tab href="#Libros">
         Libros
         <v-icon>mdi-book-open-page-variant</v-icon>
       </v-tab>
 
-      <v-tab href="#tab-3">
+      <v-tab href="#Material">
         Material
         <v-icon>mdi-content-cut</v-icon>
       </v-tab>
-      <v-tab href="#tab-4">
+      <v-tab href="#Uniformes">
         Ropa
         <v-icon>mdi-hanger</v-icon>
       </v-tab>
 
-      <v-tab href="#tab-5">
+      <v-tab href="#Juguetes">
         Juguetes
         <v-icon>mdi-racquetball</v-icon>
       </v-tab>
     </v-tabs>
 
+    <!-- Search input -->
     <v-text-field
       v-model="searchTerm"
       clearable
@@ -47,20 +50,63 @@
       solo-inverted
       @keydown.enter="onSearchItem"
     ></v-text-field>
+
+    <!--
+    <v-tabs-items v-model="tab">
+      <v-tab-item :key="0" value="Todas las categorías">
+        <div class="d-flex flex-wrap">
+          <Item v-for="(item, idx) in items" :key="idx" :item="item" />
+        </div>
+      </v-tab-item>
+      <v-tab-item :key="1" value="Libros">
+        <div class="d-flex flex-wrap">
+          <Item v-for="(item, idx) in items" :key="idx" :item="item" />
+        </div>
+      </v-tab-item>
+      <v-tab-item :key="2" value="Material">
+        <div class="d-flex flex-wrap">
+          <Item v-for="(item, idx) in items" :key="idx" :item="item" />
+        </div>
+      </v-tab-item>
+    </v-tabs-items>
+    -->
+    <div class="d-flex flex-wrap">
+      <Item v-for="(item, idx) in items" :key="idx" :item="item" />
+    </div>
   </div>
 </template>
 
 <script>
+import ItemService from '@/services/ItemService.js'
+
 export default {
   data: () => ({
     searchTerm: '',
     tab: null,
+    items: [],
   }),
+  created() {
+    this.getItems({ category: 'Todas las categorías' })
+  },
   methods: {
     onSearchItem() {
-      console.log(this.searchTerm)
-      console.log(this.tab)
+      const tabNum = parseInt(this.tab.substr(this.tab.length - 1))
+      console.log(this.searchTerm + 'for' + tabNum)
       this.searchTerm = ''
+    },
+    onTabChanged(tab) {
+      console.log(this.tab)
+      this.items = null
+      this.$router.push({ path: '/', query: { category: tab } })
+      console.log()
+      this.getItems(tab)
+    },
+    getItems(tab) {
+      ItemService.getItems(tab)
+        .then((items) => {
+          this.items = items
+        })
+        .catch((error) => console.error(error))
     },
   },
 }
