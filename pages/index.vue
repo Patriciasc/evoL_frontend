@@ -95,10 +95,8 @@ export default {
       this.searchTerm = ''
     },
     onTabChanged(tab) {
-      console.log(this.tab)
       this.items = null
       this.$router.push({ path: '/', query: { category: tab } })
-      console.log()
       this.getItems(tab)
     },
     getItems(tab) {
