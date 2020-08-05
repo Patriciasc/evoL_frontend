@@ -70,7 +70,7 @@ export default {
       }
       ItemService.createItem(newItem)
         .then(() => {
-          this.$router.push('/userItems')
+          this.$router.push('/item/mine')
         })
         .catch((error) => console.error(error))
     },

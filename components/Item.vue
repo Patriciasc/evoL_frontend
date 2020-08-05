@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="mx-1 my-2" width="185" height="240">
+    <v-card class="mx-1 my-2" width="185" height="240" @click="onItemClicked">
       <v-img class="white--text align-end" height="150px" :src="imageURL">
       </v-img>
       <v-card-title> {{ item.price }} €</v-card-title>
@@ -24,6 +24,11 @@ export default {
     return {
       imageURL: this.item.imageURL,
     }
+  },
+  methods: {
+    onItemClicked() {
+      this.$router.push(`/item/${this.item._id}`)
+    },
   },
 }
 </script>

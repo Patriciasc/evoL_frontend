@@ -26,4 +26,8 @@ export default {
     const response = await itemsAPI.get(`/${params}`)
     return response.data
   },
+  async getItemById(id) {
+    const response = await itemsAPI.get(`/${id}`)
+    return response.data[0]
+  },
 }
