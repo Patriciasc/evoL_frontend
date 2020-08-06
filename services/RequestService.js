@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const itemsAPI = axios.create({
-  baseURL: 'http://localhost:5000/api/requests',
+  baseURL: `${process.env.VUE_APP_API}/requests`,
   withCredentials: false,
   headers: {
     Accept: 'application/json',
@@ -16,15 +16,19 @@ export default {
     return response.data
   },
   async getMyRequests() {
-    console.log('getMyRequests')
     const response = await itemsAPI.get('/me')
-    console.log('RequestService: ' + response.data)
     return response.data
   },
   async getRequestsByItemId(id) {
-    console.log('getRequestsById')
     const response = await itemsAPI.get(`/${id}`)
-    console.log(response.data)
     return response.data
+  },
+  async updateRequest(request) {
+    console.log('getRequestsById')
+    const response = await itemsAPI.put(`/${request.id}`, {
+      itemId: request.itemId,
+    })
+    console.log(response)
+    return response
   },
 }

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const itemsAPI = axios.create({
-  baseURL: 'http://localhost:5000/api/items',
+  baseURL: `${process.env.VUE_APP_API}/items`,
   withCredentials: false,
   headers: {
     Accept: 'application/json',

@@ -34,11 +34,13 @@
         {{ request.userId.name }}
         {{ request.description }}
         <div>
-          <v-icon large @click="notAcceptedRequest">
+          <!--
+          <v-icon large @click="updateRequestState(request._id, 'Denegado')">
             mdi-thumb-down-outline
           </v-icon>
+          -->
 
-          <v-icon large @click="acceptedRequest">
+          <v-icon large @click="updateRequestState(request._id)">
             mdi-thumb-up-outline
           </v-icon>
         </div>
@@ -88,11 +90,17 @@ export default {
         .catch((error) => console.error(error))
       this.$router.push(`/request/mine`)
     },
-    notAcceptedRequest() {
-      alert('Not accepted')
-    },
-    acceptedRequest() {
-      alert('Accepted')
+    updateRequestState(requestId) {
+      console.log(requestId)
+      const request = {
+        id: requestId,
+        itemId: this.$route.params.id,
+      }
+      RequestService.updateRequest(request)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => console.error(error))
     },
   },
 }
