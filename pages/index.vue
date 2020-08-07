@@ -51,25 +51,6 @@
       @keydown.enter="onSearchItem"
     ></v-text-field>
 
-    <!--
-    <v-tabs-items v-model="tab">
-      <v-tab-item :key="0" value="Todas las categorías">
-        <div class="d-flex flex-wrap">
-          <Item v-for="(item, idx) in items" :key="idx" :item="item" />
-        </div>
-      </v-tab-item>
-      <v-tab-item :key="1" value="Libros">
-        <div class="d-flex flex-wrap">
-          <Item v-for="(item, idx) in items" :key="idx" :item="item" />
-        </div>
-      </v-tab-item>
-      <v-tab-item :key="2" value="Material">
-        <div class="d-flex flex-wrap">
-          <Item v-for="(item, idx) in items" :key="idx" :item="item" />
-        </div>
-      </v-tab-item>
-    </v-tabs-items>
-    -->
     <div class="d-flex flex-wrap">
       <Item v-for="(item, idx) in items" :key="idx" :item="item" />
     </div>
@@ -103,6 +84,7 @@ export default {
       ItemService.getItems(tab)
         .then((items) => {
           this.items = items
+          console.log(items)
         })
         .catch((error) => console.error(error))
     },

@@ -28,21 +28,22 @@
 
     <div v-if="isYourItem">
       <v-divider></v-divider>
-      <div>Usuarios interesados: {{ requests.length }}</div>
-      <div v-for="(request, idx) in requests" :key="idx">
-        <v-divider></v-divider>
-        {{ request.userId.name }}
-        {{ request.description }}
-        <div>
-          <!--
-          <v-icon large @click="updateRequestState(request._id, 'Denegado')">
-            mdi-thumb-down-outline
+      <div>
+        <div v-if="assignedTo">
+          Ya has elegido a quién darle éste artículo.
+          <v-icon large>
+            mdi-trash-can-outline
           </v-icon>
-          -->
-
-          <v-icon large @click="updateRequestState(request._id)">
-            mdi-thumb-up-outline
-          </v-icon>
+        </div>
+        <div v-else>
+          <div>Usuarios interesados: {{ requests.length }}</div>
+          <div v-for="(request, idx) in requests" :key="idx">
+            {{ request.userId.name }}
+            {{ request.description }}
+            <v-icon large @click="updateRequestState(request._id)">
+              mdi-thumb-up-outline
+            </v-icon>
+          </div>
         </div>
       </div>
     </div>
@@ -62,6 +63,7 @@ export default {
     return {
       description: '',
       requests: [],
+      assignedTo: false,
     }
   },
   computed: {
@@ -70,10 +72,19 @@ export default {
     },
   },
   created() {
-    RequestService.getRequestsByItemId(this.$route.params.id)
-      .then((requests) => {
-        this.requests = requests
-        console.log(this.requests)
+    ItemService.getItemById(this.$route.params.id)
+      .then((item) => {
+        if (item.assignedTo === null) {
+          console.log(item.assignedTo)
+          RequestService.getRequestsByItemId(this.$route.params.id)
+            .then((requests) => {
+              this.requests = requests
+              console.log(this.requests)
+            })
+            .catch((error) => console.error(error))
+        } else {
+          this.assignedTo = true
+        }
       })
       .catch((error) => console.error(error))
   },

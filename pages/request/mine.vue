@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-wrap">
     <div v-for="(request, idx) in userRequests" :key="idx">
-      <v-card class="mx-1 my-2" width="330" height="260">
+      <v-card class="mx-1 my-2" width="330" height="280">
         <v-img
           class="white--text align-end"
           height="150px"
@@ -11,7 +11,13 @@
         <v-card-title> {{ request.itemId.price }} €</v-card-title>
         <v-card-text class="text--primary">
           <div>{{ request.itemId.title }}</div>
-          {{ request.state }}
+          <div>{{ request.state }}</div>
+          <div v-if="request.state === 'Aceptado'">
+            Contacta con:
+            {{ request.userId.name }}
+            {{ request.userId.email }}
+            {{ request.userId.telephone }}
+          </div>
         </v-card-text>
       </v-card>
     </div>
@@ -20,12 +26,8 @@
 
 <script>
 import RequestService from '@/services/RequestService.js'
-// import Item from '~/components/Item'
 
 export default {
-  components: {
-    // Item,
-  },
   data() {
     return {
       userRequests: [],
