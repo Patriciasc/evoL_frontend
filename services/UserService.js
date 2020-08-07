@@ -10,26 +10,12 @@ const usersAPI = axios.create({
 })
 
 export default {
-  signup(signupInfo) {
-    const response = usersAPI
-      .post('/auth/signup', signupInfo)
-      .then((response) => {
-        localStorage.setItem('name', response.data.name)
-        localStorage.setItem('email', response.data.email)
-        localStorage.setItem('token', response.data.token)
-      })
-      .catch((err) => console.error(err))
+  async signup(signupInfo) {
+    const response = await usersAPI.post('/auth/signup', signupInfo)
     return response
   },
-  login(loginInfo) {
-    const response = usersAPI
-      .post('/auth/login', loginInfo)
-      .then((response) => {
-        localStorage.setItem('name', response.data.name)
-        localStorage.setItem('email', response.data.email)
-        localStorage.setItem('token', response.data.token)
-      })
-      .catch((err) => console.error(err))
+  async login(loginInfo) {
+    const response = await usersAPI.post('/auth/login', loginInfo)
     return response
   },
 }

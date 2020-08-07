@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar elevate-on-scroll fixed app>
+    <v-app-bar elevate-on-scroll fixed app color="primary">
       <v-toolbar-title v-text="title" />
       <!--
       <template v-slot:extension>
@@ -61,7 +61,7 @@
         <v-icon>mdi-heart-outline</v-icon>
       </v-btn>
 
-      <v-btn nuxt to="/login">
+      <v-btn nuxt to="/auth/login">
         <span>PERFIL</span>
         <v-icon>mdi-account-circle-outline</v-icon>
       </v-btn>

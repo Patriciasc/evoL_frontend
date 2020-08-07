@@ -78,6 +78,7 @@ export default {
     customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: false,
+      light: true,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -87,6 +88,9 @@ export default {
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
+        },
+        light: {
+          primary: 'F76469',
         },
       },
     },
