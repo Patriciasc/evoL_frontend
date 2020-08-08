@@ -44,7 +44,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn nuxt to="/auth/signup"> Registrarse</v-btn>
-            <v-btn color="primary" class="mr-4" @click="submit">Entrar</v-btn>
+            <v-btn color="accent" class="mr-4" @click="submit">Entrar</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

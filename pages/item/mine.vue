@@ -1,6 +1,9 @@
 <template>
-  <div class="d-flex flex-wrap">
-    <!--Tus publicaciones-->
+  <!--Tus publicaciones-->
+  <div v-if="userItems.length === 0">
+    Aún no has publicado nada.
+  </div>
+  <div v-else class="d-flex flex-wrap">
     <Item v-for="(item, idx) in userItems" :key="idx" :item="item" />
   </div>
 </template>

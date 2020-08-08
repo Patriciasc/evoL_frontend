@@ -41,30 +41,26 @@
       </v-container>
     </v-main>
 
-    <v-bottom-navigation fixed>
+    <v-bottom-navigation fixed class="hidden-lg-and-up">
       <v-btn nuxt to="/">
         <span>BUSCAR</span>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
-      <v-btn nuxt to="/item/mine">
+      <v-btn v-if="userIsLoggedIn" nuxt to="/item/mine">
         <span>MIS COSAS</span>
         <v-icon>mdi-thumbs-up-down</v-icon>
       </v-btn>
 
-      <div v-if="!userIsLoggedIn">
-        <v-btn nuxt to="/auth/login">
-          <v-icon color="primary" x-large>mdi-plus-circle</v-icon>
-        </v-btn>
-      </div>
-      <div v-else>
-        <v-btn nuxt to="/item/new">
-          <v-icon color="primary" x-large>mdi-plus-circle</v-icon>
-        </v-btn>
-      </div>
+      <v-btn v-if="!userIsLoggedIn" nuxt to="/auth/login">
+        <v-icon color="primary" x-large>mdi-plus-circle</v-icon>
+      </v-btn>
+      <v-btn v-else nuxt to="/item/new">
+        <v-icon color="primary" x-large>mdi-plus-circle</v-icon>
+      </v-btn>
 
-      <v-btn nuxt to="/request/mine">
-        <span>MIS SOLICITUDES</span>
+      <v-btn v-if="userIsLoggedIn" nuxt to="/request/mine">
+        <span>DESEOS</span>
         <v-icon>mdi-heart-outline</v-icon>
       </v-btn>
 
@@ -83,7 +79,7 @@
             </v-list-item>
           </div>
           <div v-else>
-            <v-list-item>
+            <v-list-item @click="userLogOut">
               <v-list-item-title>Logout</v-list-item-title>
             </v-list-item>
           </div>
@@ -91,11 +87,9 @@
       </v-menu>
     </v-bottom-navigation>
 
-    <!--
-    <v-footer absolute app>
+    <v-footer absolute app class="hidden-md-and-down">
       <span>&copy; {{ new Date().getFullYear() }} psc</span>
     </v-footer>
-      -->
   </v-app>
 </template>
 
@@ -114,6 +108,15 @@ export default {
   computed: {
     userIsLoggedIn() {
       return localStorage.getItem('email') !== null
+    },
+  },
+  methods: {
+    userLogOut() {
+      localStorage.removeItem('name')
+      localStorage.removeItem('email')
+      localStorage.removeItem('token')
+      location.reload()
+      this.$router.push(`/`)
     },
   },
 }

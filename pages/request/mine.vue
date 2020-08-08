@@ -1,5 +1,8 @@
 <template>
-  <div class="d-flex flex-wrap">
+  <div v-if="userRequests.length === 0">
+    Aún no has solicitado nada.
+  </div>
+  <div v-else class="d-flex flex-wrap">
     <div v-for="(request, idx) in userRequests" :key="idx">
       <v-card class="mx-1 my-2" width="330" height="280">
         <v-img

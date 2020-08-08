@@ -10,7 +10,7 @@
     <div>{{ description }}</div>
 
     <div v-if="!isYourItem">
-      <div class="explanation mt-5">
+      <div v-if="userIsLoggedIn" class="explanation mt-5">
         <span>Explica por qué lo necesitas:</span>
         <v-text-field
           v-model="description"
@@ -70,6 +70,9 @@ export default {
     isYourItem() {
       return this.owner.email === localStorage.getItem('email')
     },
+    userIsLoggedIn() {
+      return localStorage.getItem('email') !== null
+    },
   },
   created() {
     ItemService.getItemById(this.$route.params.id)
@@ -90,16 +93,20 @@ export default {
   },
   methods: {
     requestAnItem() {
-      const newRequest = {
-        description: this.description,
-        itemId: this.$route.params.id,
+      if (this.userIsLoggedIn) {
+        const newRequest = {
+          description: this.description,
+          itemId: this.$route.params.id,
+        }
+        RequestService.addRequest(newRequest)
+          .then((request) => {
+            console.log(request)
+          })
+          .catch((error) => console.error(error))
+        this.$router.push(`/request/mine`)
+      } else {
+        this.$router.push(`/auth/login`)
       }
-      RequestService.addRequest(newRequest)
-        .then((request) => {
-          console.log(request)
-        })
-        .catch((error) => console.error(error))
-      this.$router.push(`/request/mine`)
     },
     updateRequestState(requestId) {
       console.log(requestId)

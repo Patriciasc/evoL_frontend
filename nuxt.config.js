@@ -91,6 +91,7 @@ export default {
         },
         light: {
           primary: 'F65156',
+          accent: '363537',
           secondary: 'fdd8d8',
         },
       },
