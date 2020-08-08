@@ -90,7 +90,8 @@ export default {
           success: colors.green.accent3,
         },
         light: {
-          primary: 'F76469',
+          primary: 'F65156',
+          secondary: 'fdd8d8',
         },
       },
     },

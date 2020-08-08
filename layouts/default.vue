@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar elevate-on-scroll fixed app color="primary">
+    <v-app-bar elevate-on-scroll fixed app color="primary" dense dark>
       <v-toolbar-title v-text="title" />
       <!--
       <template v-slot:extension>
@@ -52,19 +52,43 @@
         <v-icon>mdi-thumbs-up-down</v-icon>
       </v-btn>
 
-      <v-btn nuxt to="/item/new">
-        <v-icon x-large>mdi-plus-circle</v-icon>
-      </v-btn>
+      <div v-if="!userIsLoggedIn">
+        <v-btn nuxt to="/auth/login">
+          <v-icon color="primary" x-large>mdi-plus-circle</v-icon>
+        </v-btn>
+      </div>
+      <div v-else>
+        <v-btn nuxt to="/item/new">
+          <v-icon color="primary" x-large>mdi-plus-circle</v-icon>
+        </v-btn>
+      </div>
 
       <v-btn nuxt to="/request/mine">
         <span>MIS SOLICITUDES</span>
         <v-icon>mdi-heart-outline</v-icon>
       </v-btn>
 
-      <v-btn nuxt to="/auth/login">
-        <span>PERFIL</span>
-        <v-icon>mdi-account-circle-outline</v-icon>
-      </v-btn>
+      <v-menu top offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn v-on="on">
+            <span>PERFIL</span>
+            <v-icon>mdi-account-circle-outline</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <div v-if="!userIsLoggedIn">
+            <v-list-item nuxt to="/auth/login">
+              <v-list-item-title>Login</v-list-item-title>
+            </v-list-item>
+          </div>
+          <div v-else>
+            <v-list-item>
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item>
+          </div>
+        </v-list>
+      </v-menu>
     </v-bottom-navigation>
 
     <!--
@@ -86,6 +110,11 @@ export default {
       rightDrawer: false,
       title: 'evoL',
     }
+  },
+  computed: {
+    userIsLoggedIn() {
+      return localStorage.getItem('email') !== null
+    },
   },
 }
 </script>

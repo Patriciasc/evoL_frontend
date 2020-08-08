@@ -4,7 +4,7 @@
       Revisa el formulario y rellena los datos obligatorios.
 
       <template v-slot:action="{ attrs }">
-        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+        <v-btn color="primary" text v-bind="attrs" @click="snackbar = false">
           <v-icon>mdi-window-close</v-icon>
         </v-btn>
       </template>
@@ -12,8 +12,8 @@
 
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="6">
-        <v-card class="elevation-12">
-          <v-toolbar color="primary" dark flat>
+        <v-card>
+          <v-toolbar color="secondary" flat>
             <v-toolbar-title>Registro</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
@@ -148,25 +148,33 @@ export default {
     submit() {
       this.$v.$touch()
 
-      const signupInfo = {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        telephone: this.telephone,
-      }
+      if (this.$v.$invalid) {
+        console.log('ERROR in register')
+      } else {
+        const signupInfo = {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          telephone: this.telephone,
+        }
 
-      UserService.signup(signupInfo)
-        .then((response) => {
-          localStorage.setItem('name', response.data.name)
-          localStorage.setItem('email', response.data.email)
-          localStorage.setItem('token', response.data.token)
-          this.$router.push(`/`)
-        })
-        .catch((error) => {
-          this.snackbar = true
-          console.error(error)
-        })
+        UserService.signup(signupInfo)
+          .then((response) => {
+            localStorage.setItem('name', response.data.name)
+            localStorage.setItem('email', response.data.email)
+            localStorage.setItem('token', response.data.token)
+            this.$router.push(`/`)
+          })
+          .catch((error) => {
+            this.snackbar = true
+            console.error(error)
+          })
+      }
     },
   },
 }
 </script>
+
+<style lang="scss" scoped>
+//TODO
+</style>
