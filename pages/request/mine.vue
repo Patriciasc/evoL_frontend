@@ -6,6 +6,7 @@
     <div v-for="(request, idx) in userRequests" :key="idx">
       <v-card class="mx-1 my-2" width="330" height="280">
         <v-img
+          contain
           class="white--text align-end"
           height="150px"
           :src="request.itemId.imageURL"

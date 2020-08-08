@@ -13,7 +13,7 @@
 
         <v-btn v-if="userIsLoggedIn" nuxt to="/item/mine" text>
           <v-icon>mdi-thumbs-up-down</v-icon>
-          <span>MIS COSAS</span>
+          <span> MIS COSAS</span>
         </v-btn>
 
         <v-btn v-if="!userIsLoggedIn" nuxt to="/auth/login" text>

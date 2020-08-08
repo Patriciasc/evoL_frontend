@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-img class="white--text align-end" height="150px" :src="imageURL">
+    <v-img contain class="white--text align-end" height="300px" :src="imageURL">
     </v-img>
     <div>{{ price }} €</div>
     <div>{{ category }}</div>
@@ -20,8 +20,8 @@
         ></v-text-field>
       </div>
 
-      <v-btn nuxt to="/"> Atrás </v-btn>
-      <v-btn nuxt color="primary" class="mr-4" @click="requestAnItem"
+      <v-btn nuxt to="/"> Volver </v-btn>
+      <v-btn nuxt color="accent" class="mr-4" @click="requestAnItem"
         >Solicitar</v-btn
       >
     </div>
