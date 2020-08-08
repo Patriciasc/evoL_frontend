@@ -72,7 +72,6 @@ export default {
     RequestService.getMyRequests()
       .then((requests) => {
         this.userRequests = requests
-        console.log(this.userRequests)
       })
       .catch((error) => console.error(error))
   },

@@ -43,10 +43,12 @@
               <v-text-field
                 v-model.trim="password"
                 prepend-icon="mdi-lock"
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                 :error-messages="passwordErrors"
-                type="password"
+                :type="show ? 'text' : 'password'"
                 label="* Contraseña"
                 required
+                @click:append="show = !show"
                 @input="$v.password.$touch()"
                 @blur="$v.password.$touch()"
               ></v-text-field>
@@ -54,10 +56,12 @@
               <v-text-field
                 v-model.trim="repeatPassword"
                 prepend-icon="mdi-lock"
+                :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
                 :error-messages="repeatPasswordErrors"
-                type="password"
+                :type="show2 ? 'text' : 'password'"
                 label="* Repite la contraseña"
                 required
+                @click:append="show2 = !show2"
                 @input="$v.repeatPassword.$touch()"
                 @blur="$v.repeatPassword.$touch()"
               ></v-text-field>
@@ -106,6 +110,8 @@ export default {
     snackbar: false,
     name: '',
     email: '',
+    show: false,
+    show2: false,
     password: '',
     repeatPassword: '',
     telephone: '',

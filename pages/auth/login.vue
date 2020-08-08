@@ -32,10 +32,12 @@
               <v-text-field
                 v-model.trim="password"
                 prepend-icon="mdi-lock"
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                 :error-messages="passwordErrors"
-                type="password"
+                :type="show ? 'text' : 'password'"
                 label="Contraseña"
                 required
+                @click:append="show = !show"
                 @input="$v.password.$touch()"
                 @blur="$v.password.$touch()"
               ></v-text-field>
@@ -73,6 +75,7 @@ export default {
   data: () => ({
     snackbar: false,
     email: '',
+    show: false,
     password: '',
   }),
 
