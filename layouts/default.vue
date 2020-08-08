@@ -2,6 +2,57 @@
   <v-app>
     <v-app-bar elevate-on-scroll fixed app color="primary" dense dark>
       <v-toolbar-title v-text="title" />
+
+      <v-spacer></v-spacer>
+
+      <div class="hidden-md-and-down">
+        <v-btn nuxt to="/" dark text>
+          <v-icon>mdi-magnify</v-icon>
+          <span>BUSCAR</span>
+        </v-btn>
+
+        <v-btn v-if="userIsLoggedIn" nuxt to="/item/mine" text>
+          <v-icon>mdi-thumbs-up-down</v-icon>
+          <span>MIS COSAS</span>
+        </v-btn>
+
+        <v-btn v-if="!userIsLoggedIn" nuxt to="/auth/login" text>
+          <v-icon>mdi-plus-circle</v-icon>
+          <span>PUBLICAR</span>
+        </v-btn>
+        <v-btn v-else nuxt to="/item/new">
+          <v-icon>mdi-plus-circle</v-icon>
+          <span>PUBLICAR</span>
+        </v-btn>
+
+        <v-btn v-if="userIsLoggedIn" nuxt to="/request/mine" text>
+          <v-icon>mdi-heart</v-icon>
+          <span>DESEOS</span>
+        </v-btn>
+
+        <v-menu offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn text v-on="on">
+              <v-icon>mdi-account-circle-outline</v-icon>
+              <span>PERFIL</span>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <div v-if="!userIsLoggedIn">
+              <v-list-item nuxt to="/auth/login">
+                <v-list-item-title>Login</v-list-item-title>
+              </v-list-item>
+            </div>
+            <div v-else>
+              <v-list-item @click="userLogOut">
+                <v-list-item-title>Logout</v-list-item-title>
+              </v-list-item>
+            </div>
+          </v-list>
+        </v-menu>
+      </div>
+
       <!--
       <template v-slot:extension>
         <v-tabs show-arrows centered icons-and-text center-active flat>
