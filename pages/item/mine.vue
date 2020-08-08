@@ -1,8 +1,13 @@
 <template>
   <!--Tus publicaciones-->
-  <div v-if="userItems.length === 0">
+  <h2
+    v-if="userItems.length === 0"
+    align="center"
+    justify="center"
+    class="mt-16"
+  >
     Aún no has publicado nada.
-  </div>
+  </h2>
   <div v-else class="d-flex flex-wrap">
     <Item v-for="(item, idx) in userItems" :key="idx" :item="item" />
   </div>

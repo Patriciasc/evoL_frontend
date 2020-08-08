@@ -1,34 +1,14 @@
 <template>
-  <!--
-  <div v-if="userRequests.length === 0">
-    <p>Aún no has solicitado nada.</p>
-  </div>
-  <div v-else class="d-flex flex-wrap">
-    <div v-for="(request, idx) in userRequests" :key="idx">
-      <v-card class="mx-1 my-2" width="330" height="280">
-        <v-img
-          contain
-          class="white--text align-end"
-          height="150px"
-          :src="request.itemId.imageURL"
-        >
-        </v-img>
-        <v-card-title> {{ request.itemId.price }} €</v-card-title>
-        <v-card-text class="text--primary">
-          <div>{{ request.itemId.title }}</div>
-          <div>{{ request.state }}</div>
-          <div v-if="request.state === 'Aceptado'">
-            Contacta con:
-            {{ request.userId.name }}
-            {{ request.userId.email }}
-            {{ request.userId.telephone }}
-          </div>
-        </v-card-text>
-      </v-card>
-    </div>
-  </div>
--->
-  <v-container class="mx-auto">
+  <h2
+    v-if="userRequests.length === 0"
+    align="center"
+    justify="center"
+    class="mt-16"
+  >
+    Aún no has solicitado nada.
+  </h2>
+
+  <v-container v-else class="mx-auto">
     <v-row dense>
       <v-col
         v-for="(request, i) in userRequests"
@@ -52,12 +32,23 @@
               <v-card-subtitle v-text="request.userId.name"></v-card-subtitle>
 
               <v-card-text class="text--primary">
-                <div>ESTADO: {{ request.state }}</div>
                 <div v-if="request.state === 'Aceptado'">
+                  <span><v-icon color="green">mdi-progress-check</v-icon></span>
+                  <span>ESTADO: ¡{{ request.state }}!</span>
                   Contacta con:
                   {{ request.userId.name }}
                   {{ request.userId.email }}
                   {{ request.userId.telephone }}
+                </div>
+                <div v-else-if="request.state === 'En espera'">
+                  <span
+                    ><v-icon color="orange">mdi-progress-clock</v-icon></span
+                  >
+                  <span>ESTADO: {{ request.state }}</span>
+                </div>
+                <div v-else-if="request.state === 'Denegado'">
+                  <span><v-icon color="red">mdi-progress-close</v-icon></span>
+                  <span>ESTADO: {{ request.state }}</span>
                 </div>
               </v-card-text>
             </div>
