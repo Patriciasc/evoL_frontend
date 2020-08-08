@@ -43,10 +43,15 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn nuxt to="/auth/signup"> Registrarse</v-btn>
             <v-btn color="accent" class="mr-4" @click="submit">Entrar</v-btn>
           </v-card-actions>
         </v-card>
+      </v-col>
+    </v-row>
+    <v-row align="center" justify="center">
+      <v-col cols="12" sm="8" md="6" align="center" justify="center">
+        <span>¿Aún no tienes una cuenta?</span>
+        <v-btn nuxt to="/auth/signup" small> Registrarse</v-btn>
       </v-col>
     </v-row>
   </v-container>

@@ -79,7 +79,7 @@
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
-      <v-col cols="12" sm="8" md="6">
+      <v-col cols="12" sm="8" md="6" align="center" justify="center">
         <span>¿Ya tienes una cuenta?</span>
         <v-btn nuxt to="/auth/login" small> Entrar</v-btn>
       </v-col>

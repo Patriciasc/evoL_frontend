@@ -44,7 +44,6 @@
       clearable
       class="mx-1 my-2"
       flat
-      hide-details
       label="Search"
       prepend-inner-icon="mdi-magnify"
       solo-inverted

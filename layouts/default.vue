@@ -16,7 +16,7 @@
           <span> MIS COSAS</span>
         </v-btn>
 
-        <v-btn v-if="!userIsLoggedIn" nuxt to="/auth/login" text>
+        <v-btn v-if="!userIsLoggedIn" nuxt to="/auth/login">
           <v-icon>mdi-plus-circle</v-icon>
           <span>PUBLICAR</span>
         </v-btn>
@@ -138,9 +138,13 @@
       </v-menu>
     </v-bottom-navigation>
 
-    <v-footer absolute app class="hidden-md-and-down">
-      <span>&copy; {{ new Date().getFullYear() }} psc</span>
-    </v-footer>
+    <template>
+      <v-footer padless>
+        <v-col class="text-center hidden-md-and-down" cols="12">
+          &copy; {{ new Date().getFullYear() }} — <strong>psc</strong>
+        </v-col>
+      </v-footer>
+    </template>
   </v-app>
 </template>
 
