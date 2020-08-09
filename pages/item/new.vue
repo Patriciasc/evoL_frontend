@@ -13,6 +13,7 @@
             label="Ponle un Título"
             clearable
             required
+            :counter="40"
             color="accent"
             :error-messages="titleErrors"
             @input="$v.title.$touch()"
@@ -25,6 +26,7 @@
             label="Escribe una breve descripción"
             clearable
             required
+            :counter="80"
             color="accent"
             :error-messages="descriptionErrors"
             @input="$v.description.$touch()"
@@ -58,10 +60,11 @@
           <v-text-field
             v-model="price"
             type="number"
-            label="Pon precio si quieres. Si lo dejas vacío, entendemos que quieres hacer un regalo"
+            label="Si no lo cambias, entendemos que quieres hacer un regalo"
             required
             color="accent"
             :error-messages="priceErrors"
+            suffix="€"
             @input="$v.price.$touch()"
             @blur="$v.price.$touch()"
           ></v-text-field>

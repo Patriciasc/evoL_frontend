@@ -5,7 +5,8 @@
     justify="center"
     class="mt-16"
   >
-    Aún no has solicitado nada.
+    Aún no has solicitado nada. Usa nuestro botón BUSCAR para encontrar lo que
+    necesitas.
   </h2>
 
   <v-container v-else class="mx-auto">
@@ -18,8 +19,8 @@
         md="6"
       >
         <v-card>
-          <div class="d-flex flex-no-wrap justify-space-between">
-            <v-avatar class="ma-3" size="125" tile>
+          <div class="d-flex flex-no-wrap">
+            <v-avatar class="ma-2" size="150" tile>
               <v-img :src="request.itemId.imageURL"></v-img>
             </v-avatar>
 
@@ -29,28 +30,80 @@
                 v-text="request.itemId.title"
               ></v-card-title>
 
-              <v-card-subtitle v-text="request.userId.name"></v-card-subtitle>
+              <v-card-subtitle v-text="request.description"></v-card-subtitle>
 
               <v-card-text class="text--primary">
                 <div v-if="request.state === 'Aceptado'">
-                  <span><v-icon color="green">mdi-progress-check</v-icon></span>
-                  <span>ESTADO: ¡{{ request.state }}!</span>
-                  Contacta con:
-                  {{ request.userId.name }}
+                  <v-icon color="green">mdi-progress-check</v-icon>
+                  <span>¡{{ request.state }}!</span>
+                  <span
+                    >{{ request.userId.name }} ha aceptado tu solicitud.</span
+                  >
+                  <v-divider></v-divider>
+                  <p>Datos de contacto:</p>
                   {{ request.userId.email }}
                   {{ request.userId.telephone }}
                 </div>
+
                 <div v-else-if="request.state === 'En espera'">
-                  <span
-                    ><v-icon color="orange">mdi-progress-clock</v-icon></span
-                  >
-                  <span>ESTADO: {{ request.state }}</span>
+                  <v-icon color="orange">mdi-progress-clock</v-icon>
+                  <span>{{ request.state }}</span>
                 </div>
+
                 <div v-else-if="request.state === 'Denegado'">
-                  <span><v-icon color="red">mdi-progress-close</v-icon></span>
-                  <span>ESTADO: {{ request.state }}</span>
+                  <v-icon color="red">mdi-progress-close</v-icon>
+                  <span>{{ request.state }}</span>
+                  <span>El artículo ha sido asignado a otra persona</span>
                 </div>
               </v-card-text>
+
+              <v-card-actions
+                v-if="
+                  request.state === 'Aceptado' || request.state === 'Denegado'
+                "
+              >
+                <v-row justify="center">
+                  <v-dialog v-model="dialog" persistent max-width="290">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        color="accent"
+                        outlined
+                        dark
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        Eliminar
+                      </v-btn>
+                    </template>
+                    <v-card>
+                      <v-card-title class="headline"
+                        >Eliminar solicitud</v-card-title
+                      >
+                      <v-card-text v-if="request.state !== 'Aceptado'"
+                        >¿Quieres eliminar ésta solicitud?
+                      </v-card-text>
+                      <v-card-text v-else>
+                        Ésta solicitud está aceptada. Asegúrate de contactar con
+                        su dueño, antes de eliminarla. ¿Estás seguro de
+                        eliminar?
+                      </v-card-text>
+
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="accent" text @click="dialog = false"
+                          >No</v-btn
+                        >
+                        <v-btn
+                          color="primary"
+                          text
+                          @click="removeRequest(request._id)"
+                          >Sí</v-btn
+                        >
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-row>
+              </v-card-actions>
             </div>
           </div>
         </v-card>
@@ -66,6 +119,7 @@ export default {
   data() {
     return {
       userRequests: [],
+      dialog: false,
     }
   },
   created() {
@@ -74,6 +128,16 @@ export default {
         this.userRequests = requests
       })
       .catch((error) => console.error(error))
+  },
+  methods: {
+    removeRequest(requestId) {
+      this.dialog = false
+      RequestService.deleteRequestbyId(requestId)
+        .then((response) => {
+          location.reload()
+        })
+        .catch((error) => console.error(error))
+    },
   },
 }
 </script>

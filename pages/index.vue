@@ -66,7 +66,7 @@ export default {
     items: [],
   }),
   created() {
-    this.getItems({ category: 'Todas las categorías' })
+    this.getItems('All')
   },
   methods: {
     onSearchItem() {
@@ -83,7 +83,6 @@ export default {
       ItemService.getItems(tab)
         .then((items) => {
           this.items = items
-          console.log(items)
         })
         .catch((error) => console.error(error))
     },

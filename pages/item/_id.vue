@@ -43,12 +43,9 @@
           <div>
             <div v-if="assignedTo">
               <p>Ya has elegido a quién darle éste artículo.</p>
-              <v-icon large>
-                mdi-trash-can-outline
-              </v-icon>
             </div>
             <div v-else>
-              <div>INTERESADOS: {{ requests.length }}</div>
+              <div>Personas interesadas: {{ requests.length }}</div>
               <div v-for="(request, idx) in requests" :key="idx">
                 <v-divider></v-divider>
                 <span class="font-weight-black">{{ request.userId.name }}</span>
@@ -59,6 +56,29 @@
               </div>
             </div>
           </div>
+          <v-row justify="center">
+            <v-dialog v-model="dialog" persistent max-width="290">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="accent" outlined dark v-bind="attrs" v-on="on">
+                  Eliminar
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title class="headline"
+                  >Eliminar publicación</v-card-title
+                >
+                <v-card-text>
+                  ¿Quieres eliminar ésta publicación?
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="accent" text @click="dialog = false">No</v-btn>
+                  <v-btn color="primary" text @click="removeItemById">Sí</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-row>
         </div>
       </v-col>
     </v-row>
@@ -79,6 +99,7 @@ export default {
       description: '',
       requests: [],
       assignedTo: false,
+      dialog: false,
     }
   },
   computed: {
@@ -130,6 +151,14 @@ export default {
       RequestService.updateRequest(request)
         .then((response) => {
           console.log(response)
+        })
+        .catch((error) => console.error(error))
+    },
+    removeItemById() {
+      this.dialog = false
+      ItemService.deleteItembyId(this.$route.params.id)
+        .then((response) => {
+          this.$router.push(`/item/mine`)
         })
         .catch((error) => console.error(error))
     },

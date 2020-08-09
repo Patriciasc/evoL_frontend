@@ -24,11 +24,14 @@ export default {
     return response.data
   },
   async updateRequest(request) {
-    console.log('getRequestsById')
     const response = await itemsAPI.put(`/${request.id}`, {
       itemId: request.itemId,
     })
     console.log(response)
+    return response
+  },
+  async deleteRequestbyId(id) {
+    const response = await itemsAPI.delete(`/${id}`)
     return response
   },
 }

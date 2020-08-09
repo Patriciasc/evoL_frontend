@@ -4,8 +4,8 @@
       <v-img class="white--text align-end" height="150px" :src="imageURL">
       </v-img>
       <v-card-title> {{ item.price }} €</v-card-title>
-      <v-card-text class="text--primary">
-        <div>{{ item.title }}</div>
+      <v-card-text>
+        <p>{{ item.title }}</p>
       </v-card-text>
     </v-card>
   </div>
@@ -34,5 +34,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-//TODO
+p {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
 </style>
