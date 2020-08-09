@@ -4,7 +4,7 @@
       <v-col cols="12" sm="8" md="6">
         <v-img
           contain
-          class="white--text align-end mb-5"
+          class="white--text align-end mb-5 rounded"
           height="300px"
           :src="imageURL"
         >
@@ -23,14 +23,18 @@
           <div v-if="userIsLoggedIn" class="explanation mt-5">
             <span>Explica por qué lo necesitas:</span>
             <v-text-field
-              v-model="description"
+              v-model="comment"
               type="text"
               label="Explica por qué lo necesitas"
+              :counter="100"
               required
+              :error-messages="commentErrors"
+              @input="$v.comment.$touch()"
+              @blur="$v.comment.$touch()"
             ></v-text-field>
           </div>
 
-          <div align="right" justify="center">
+          <div class="mt-6" align="right" justify="center">
             <v-btn nuxt to="/"> Volver </v-btn>
             <v-btn nuxt color="accent" class="mr-4" @click="requestAnItem"
               >Solicitar</v-btn
@@ -49,7 +53,7 @@
               <div v-for="(request, idx) in requests" :key="idx">
                 <v-divider></v-divider>
                 <span class="font-weight-black">{{ request.userId.name }}</span>
-                <p>{{ request.description }}</p>
+                <p>{{ request.comment }}</p>
                 <v-icon large @click="updateRequestState(request._id)">
                   mdi-thumb-up-outline
                 </v-icon>
@@ -59,7 +63,14 @@
           <v-row justify="center">
             <v-dialog v-model="dialog" persistent max-width="290">
               <template v-slot:activator="{ on, attrs }">
-                <v-btn color="accent" outlined dark v-bind="attrs" v-on="on">
+                <v-btn
+                  class="mt-6"
+                  color="accent"
+                  outlined
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
                   Eliminar
                 </v-btn>
               </template>
@@ -86,10 +97,16 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
 import ItemService from '@/services/ItemService.js'
 import RequestService from '@/services/RequestService.js'
 
 export default {
+  mixins: [validationMixin],
+  validations: {
+    comment: { required },
+  },
   async asyncData({ $axios, params }) {
     const response = await ItemService.getItemById(params.id)
     return { ...response }
@@ -100,6 +117,7 @@ export default {
       requests: [],
       assignedTo: false,
       dialog: false,
+      comment: '',
     }
   },
   computed: {
@@ -108,6 +126,12 @@ export default {
     },
     userIsLoggedIn() {
       return localStorage.getItem('email') !== null
+    },
+    commentErrors() {
+      const errors = []
+      if (!this.$v.comment.$dirty) return errors
+      !this.$v.comment.required && errors.push('Éste campo es obligatorio')
+      return errors
     },
   },
   created() {
@@ -127,9 +151,13 @@ export default {
   },
   methods: {
     requestAnItem() {
-      if (this.userIsLoggedIn) {
+      this.$v.$touch()
+
+      if (this.$v.$invalid) {
+        console.log('ERROR requesting item')
+      } else if (this.userIsLoggedIn) {
         const newRequest = {
-          description: this.description,
+          comment: this.comment,
           itemId: this.$route.params.id,
         }
         RequestService.addRequest(newRequest)

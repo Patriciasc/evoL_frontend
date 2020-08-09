@@ -8,22 +8,47 @@
   >
     Aún no has publicado nada.
   </h2>
-  <div v-else class="d-flex flex-wrap">
-    <Item v-for="(item, idx) in userItems" :key="idx" :item="item" />
-  </div>
+
+  <v-container v-else fluid>
+    <v-row dense>
+      <v-col v-for="(item, idx) in userItems" :key="idx" cols="6" sm="3" md="3">
+        <v-card>
+          <v-img
+            :src="item.imageURL"
+            class="white--text align-end"
+            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+            height="200px"
+            @click="onItemClicked(item._id)"
+          >
+          </v-img>
+
+          <v-card-text
+            align="center"
+            justify="center"
+            v-text="item.title"
+          ></v-card-text>
+
+          <p
+            align="center"
+            justify="center"
+            class="font-weight-bold"
+            v-text="requesters + ' interesados'"
+          ></p>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import ItemService from '@/services/ItemService.js'
-import Item from '~/components/Item'
 
 export default {
-  components: {
-    Item,
-  },
+  components: {},
   data() {
     return {
       userItems: [],
+      requesters: 0,
     }
   },
   created() {
@@ -32,6 +57,11 @@ export default {
         this.userItems = items
       })
       .catch((error) => console.error(error))
+  },
+  methods: {
+    onItemClicked(id) {
+      this.$router.push(`/item/${id}`)
+    },
   },
 }
 </script>

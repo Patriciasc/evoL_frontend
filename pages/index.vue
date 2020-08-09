@@ -50,9 +50,13 @@
       @keydown.enter="onSearchItem"
     ></v-text-field>
 
-    <div class="d-flex flex-wrap">
-      <Item v-for="(item, idx) in items" :key="idx" :item="item" />
-    </div>
+    <v-container fluid>
+      <v-row dense>
+        <v-col v-for="(item, idx) in items" :key="idx" cols="6" sm="3" md="3">
+          <Item :item="item" />
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 

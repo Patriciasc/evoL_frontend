@@ -83,7 +83,7 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
-import { required } from 'vuelidate/lib/validators'
+import { required, maxLength } from 'vuelidate/lib/validators'
 import ItemService from '@/services/ItemService.js'
 import ImagePicker from '~/components/ImagePicker'
 
@@ -91,8 +91,8 @@ export default {
   components: { ImagePicker },
   mixins: [validationMixin],
   validations: {
-    title: { required },
-    description: { required },
+    title: { required, maxLength: maxLength(40) },
+    description: { required, maxLength: maxLength(80) },
     category: { required },
     state: { required },
     price: { required },
@@ -119,12 +119,16 @@ export default {
     titleErrors() {
       const errors = []
       if (!this.$v.title.$dirty) return errors
+      !this.$v.title.maxLength &&
+        errors.push('El título puede tener como máximo 40 caracteres')
       !this.$v.title.required && errors.push('Éste campo es obligatorio')
       return errors
     },
     descriptionErrors() {
       const errors = []
       if (!this.$v.description.$dirty) return errors
+      !this.$v.description.maxLength &&
+        errors.push('La descripción puede tener como máximo 80 caracteres')
       !this.$v.description.required && errors.push('Éste campo es obligatorio')
       return errors
     },
