@@ -1,5 +1,4 @@
 <template>
-  <!--Tus publicaciones-->
   <h2
     v-if="userItems.length === 0"
     align="center"
@@ -11,28 +10,35 @@
 
   <v-container v-else fluid>
     <v-row dense>
-      <v-col v-for="(item, idx) in userItems" :key="idx" cols="6" sm="3" md="3">
+      <v-col
+        v-for="(element, idx) in userItems"
+        :key="idx"
+        cols="6"
+        sm="3"
+        md="3"
+      >
         <v-card>
           <v-img
-            :src="item.imageURL"
+            :src="element.item.imageURL"
             class="white--text align-end"
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             height="200px"
-            @click="onItemClicked(item._id)"
+            @click="onItemClicked(element.item._id)"
           >
           </v-img>
 
           <v-card-text
             align="center"
             justify="center"
-            v-text="item.title"
+            class="title"
+            v-text="element.item.title"
           ></v-card-text>
 
           <p
             align="center"
             justify="center"
             class="font-weight-bold"
-            v-text="requesters + ' interesados'"
+            v-text="element.request.length + ' interesados'"
           ></p>
         </v-card>
       </v-col>
@@ -42,19 +48,30 @@
 
 <script>
 import ItemService from '@/services/ItemService.js'
+import RequestService from '@/services/RequestService.js'
 
 export default {
-  components: {},
   data() {
     return {
       userItems: [],
-      requesters: 0,
     }
   },
+  computed: {},
   created() {
     ItemService.getMyItems()
       .then((items) => {
-        this.userItems = items
+        const result = items.map((item) => {
+          return RequestService.getRequestsByItemId(item._id).then(
+            (request) => {
+              return {
+                item,
+                request,
+              }
+            }
+          )
+        })
+
+        Promise.all(result).then((value) => (this.userItems = value))
       })
       .catch((error) => console.error(error))
   },
@@ -67,5 +84,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-//TODO
+.title {
+  width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px !important;
+}
 </style>

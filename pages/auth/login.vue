@@ -112,7 +112,9 @@ export default {
             localStorage.setItem('name', response.data.name)
             localStorage.setItem('email', response.data.email)
             localStorage.setItem('token', response.data.token)
-            this.$router.push(`/`)
+            this.$nuxt.$emit('userIsLoggedIn', true)
+            window.location.href = '/'
+            // this.$router.push(`/`)
           })
           .catch((error) => {
             this.snackbar = true

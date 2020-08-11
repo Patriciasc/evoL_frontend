@@ -10,7 +10,7 @@
       <v-card-title v-text="item.price + '€'"></v-card-title>
     </v-img>
 
-    <v-card-text v-text="item.title"></v-card-text>
+    <v-card-text class="title" v-text="item.title"></v-card-text>
   </v-card>
 </template>
 
@@ -38,10 +38,10 @@ export default {
 
 <style lang="scss" scoped>
 .title {
-  width: 160px;
+  width: 180px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 10px;
+  font-size: 12px !important;
 }
 </style>

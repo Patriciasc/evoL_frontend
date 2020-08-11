@@ -1,5 +1,96 @@
 <template>
   <v-container class="fill-height" fluid>
+    <v-card class="mx-auto my-12" max-width="380">
+      <v-img contain height="300px" :src="imageURL"> </v-img>
+
+      <v-card-title> {{ title }}</v-card-title>
+
+      <v-card-text>
+        <div class="grey--text">{{ category }}</div>
+
+        <div class="my-4 subtitle-1">{{ price }} €</div>
+
+        <div>Estado: {{ state }}</div>
+
+        <div>{{ description }}</div>
+      </v-card-text>
+
+      <div v-if="!isYourItem">
+        <v-divider class="mx-4"></v-divider>
+        <div v-if="userIsLoggedIn" class="explanation mt-5">
+          <v-card-title>¿Por qué lo necesitas?</v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="comment"
+              type="text"
+              label="Explica por qué lo necesitas"
+              :counter="100"
+              required
+              :error-messages="commentErrors"
+              @input="$v.comment.$touch()"
+              @blur="$v.comment.$touch()"
+            ></v-text-field>
+          </v-card-text>
+        </div>
+
+        <v-card-actions>
+          <v-btn text nuxt to="/"> Volver </v-btn>
+          <v-btn text nuxt color="primary" class="mr-4" @click="requestAnItem"
+            >Solicitar</v-btn
+          >
+        </v-card-actions>
+      </div>
+
+      <div v-if="isYourItem">
+        <v-divider class="mx-4"></v-divider>
+        <div>
+          <div v-if="assignedTo">
+            <v-card-title
+              >Ya has elegido a quién darle éste artículo.
+            </v-card-title>
+          </div>
+          <div v-else>
+            <v-card-title
+              >Personas interesadas: {{ requests.length }}
+            </v-card-title>
+            <div v-for="(request, idx) in requests" :key="idx">
+              <v-divider></v-divider>
+              <span class="font-weight-black">{{ request.userId.name }}</span>
+              <p>{{ request.comment }}</p>
+              <v-icon large @click="updateRequestState(request._id)">
+                mdi-thumb-up-outline
+              </v-icon>
+            </div>
+            <v-divider class="mx-4"></v-divider>
+          </div>
+        </div>
+        <v-card-actions>
+          <v-dialog v-model="dialog" persistent max-width="290">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" v-bind="attrs" icon v-on="on">
+                <v-icon>mdi-trash-can-outline</v-icon>
+              </v-btn>
+              <v-btn color="primary" icon>
+                <v-icon>mdi-pencil-outline</v-icon>
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title class="headline">Eliminar publicación</v-card-title>
+              <v-card-text>
+                ¿Quieres eliminar ésta publicación?
+              </v-card-text>
+
+              <v-card-actions>
+                <v-btn color="accent" text @click="dialog = false">No</v-btn>
+                <v-btn color="primary" text @click="removeItemById">Sí</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-card-actions>
+      </div>
+    </v-card>
+
+    <!--
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="6">
         <v-img
@@ -93,6 +184,7 @@
         </div>
       </v-col>
     </v-row>
+    -->
   </v-container>
 </template>
 
@@ -151,22 +243,27 @@ export default {
   },
   methods: {
     requestAnItem() {
-      this.$v.$touch()
+      console.log('requestAnItem')
+      if (this.userIsLoggedIn) {
+        this.$v.$touch()
 
-      if (this.$v.$invalid) {
-        console.log('ERROR requesting item')
-      } else if (this.userIsLoggedIn) {
-        const newRequest = {
-          comment: this.comment,
-          itemId: this.$route.params.id,
+        if (this.$v.$invalid) {
+          console.log('ERROR requesting item')
+        } else {
+          const newRequest = {
+            comment: this.comment,
+            itemId: this.$route.params.id,
+          }
+          console.log(newRequest)
+          RequestService.addRequest(newRequest)
+            .then((request) => {
+              console.log(request)
+            })
+            .catch((error) => console.error(error))
+          this.$router.push(`/request/mine`)
         }
-        RequestService.addRequest(newRequest)
-          .then((request) => {
-            console.log(request)
-          })
-          .catch((error) => console.error(error))
-        this.$router.push(`/request/mine`)
       } else {
+        console.log('User is not logged in')
         this.$router.push(`/auth/login`)
       }
     },
@@ -179,6 +276,7 @@ export default {
       RequestService.updateRequest(request)
         .then((response) => {
           console.log(response)
+          location.reload()
         })
         .catch((error) => console.error(error))
     },

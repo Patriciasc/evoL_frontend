@@ -41,12 +41,16 @@
           <v-list>
             <div v-if="!userIsLoggedIn">
               <v-list-item nuxt to="/auth/login">
-                <v-list-item-title>Login</v-list-item-title>
+                <v-list-item-title
+                  ><v-icon>mdi-login</v-icon>Login</v-list-item-title
+                >
               </v-list-item>
             </div>
             <div v-else>
               <v-list-item @click="userLogOut">
-                <v-list-item-title>Logout</v-list-item-title>
+                <v-list-item-title
+                  ><v-icon>mdi-logout</v-icon>Logout</v-list-item-title
+                >
               </v-list-item>
             </div>
           </v-list>
@@ -87,7 +91,7 @@
     </v-app-bar>
 
     <v-main>
-      <v-container>
+      <v-container class="hasToolbar">
         <nuxt />
       </v-container>
     </v-main>
@@ -125,13 +129,17 @@
 
         <v-list>
           <div v-if="!userIsLoggedIn">
-            <v-list-item nuxt to="/auth/login">
-              <v-list-item-title>Login</v-list-item-title>
+            <v-list-item dense nuxt to="/auth/login">
+              <v-list-item-title
+                ><v-icon>mdi-login</v-icon>Login</v-list-item-title
+              >
             </v-list-item>
           </div>
           <div v-else>
-            <v-list-item @click="userLogOut">
-              <v-list-item-title>Logout</v-list-item-title>
+            <v-list-item dense @click="userLogOut">
+              <v-list-item-title
+                ><v-icon>mdi-logout</v-icon>Logout</v-list-item-title
+              >
             </v-list-item>
           </div>
         </v-list>
@@ -158,12 +166,18 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'evoL',
+      isLogged: false,
     }
   },
   computed: {
     userIsLoggedIn() {
-      return localStorage.getItem('email') !== null
+      return this.isLogged || localStorage.getItem('email') !== null
     },
+  },
+  mounted() {
+    this.$nuxt.$on('userIsLoggedIn', (isLogged) => {
+      this.isLogged = isLogged
+    })
   },
   methods: {
     userLogOut() {
@@ -176,3 +190,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.hasToolbar {
+  margin-bottom: 46px;
+}
+</style>

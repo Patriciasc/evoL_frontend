@@ -12,6 +12,7 @@ const itemsAPI = axios.create({
 
 export default {
   async addRequest(newRequest) {
+    console.log('RequestService: addRequest')
     const response = await itemsAPI.post('/', newRequest)
     return response.data
   },

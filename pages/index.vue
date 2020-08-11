@@ -42,7 +42,7 @@
     <v-text-field
       v-model="searchTerm"
       clearable
-      class="mx-1 my-2"
+      class="mx-1 mt-3"
       flat
       label="Search"
       prepend-inner-icon="mdi-magnify"
