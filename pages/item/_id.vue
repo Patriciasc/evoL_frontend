@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height" fluid>
-    <v-card class="mx-auto my-12" max-width="380">
-      <v-img contain height="300px" :src="imageURL"> </v-img>
+    <v-card class="mx-auto" max-width="500">
+      <v-img class="mt-5" contain height="300px" :src="imageURL"> </v-img>
 
       <v-card-title> {{ title }}</v-card-title>
 
@@ -45,32 +45,40 @@
         <v-divider class="mx-4"></v-divider>
         <div>
           <div v-if="assignedTo">
-            <v-card-title
-              >Ya has elegido a quién darle éste artículo.
-            </v-card-title>
+            <v-card-text
+              >Ya has elegido a quién darle éste artículo. Espera a que se ponga
+              en contacto contigo para que se pongan de acuerdo sobre la
+              entrega.
+            </v-card-text>
           </div>
           <div v-else>
             <v-card-title
               >Personas interesadas: {{ requests.length }}
             </v-card-title>
-            <div v-for="(request, idx) in requests" :key="idx">
-              <v-divider></v-divider>
-              <span class="font-weight-black">{{ request.userId.name }}</span>
-              <p>{{ request.comment }}</p>
-              <v-icon large @click="updateRequestState(request._id)">
-                mdi-thumb-up-outline
-              </v-icon>
-            </div>
+            <v-card-text v-if="requests.length > 0">
+              Elige a quién quieres entregarle el artículo.
+            </v-card-text>
+            <v-card-text>
+              <div v-for="(request, idx) in requests" :key="idx">
+                <span class="font-weight-black">{{ request.userId.name }}</span>
+                <p>{{ request.comment }}</p>
+                <div align="center" justify="center">
+                  <v-icon large @click="updateRequestState(request._id)">
+                    mdi-thumb-up-outline
+                  </v-icon>
+                </div>
+              </div>
+            </v-card-text>
             <v-divider class="mx-4"></v-divider>
           </div>
         </div>
-        <v-card-actions>
+        <v-card-actions v-if="requests.length === 0">
           <v-dialog v-model="dialog" persistent max-width="290">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" v-bind="attrs" icon v-on="on">
                 <v-icon>mdi-trash-can-outline</v-icon>
               </v-btn>
-              <v-btn color="primary" icon>
+              <v-btn v-if="!assignedTo" color="primary" icon>
                 <v-icon>mdi-pencil-outline</v-icon>
               </v-btn>
             </template>

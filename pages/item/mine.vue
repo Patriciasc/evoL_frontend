@@ -34,12 +34,22 @@
             v-text="element.item.title"
           ></v-card-text>
 
-          <p
-            align="center"
-            justify="center"
-            class="font-weight-bold"
-            v-text="element.request.length + ' interesados'"
-          ></p>
+          <div v-if="element.item.assignedTo === null">
+            <p
+              align="center"
+              justify="center"
+              class="font-weight-bold"
+              v-text="element.request.length + ' interesados'"
+            ></p>
+          </div>
+          <div v-else>
+            <p
+              align="center"
+              justify="center"
+              class="font-weight-bold"
+              v-text="'Asignado'"
+            ></p>
+          </div>
         </v-card>
       </v-col>
     </v-row>

@@ -28,7 +28,7 @@
         <v-icon>mdi-content-cut</v-icon>
       </v-tab>
       <v-tab href="#Uniformes">
-        Ropa
+        Uniformes
         <v-icon>mdi-hanger</v-icon>
       </v-tab>
 
