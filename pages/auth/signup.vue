@@ -11,7 +11,7 @@
     </v-snackbar>
 
     <v-row align="center" justify="center">
-      <v-col cols="12" sm="8" md="6">
+      <v-col cols="12" md="6">
         <v-card>
           <v-toolbar color="secondary" flat>
             <v-toolbar-title>Registro</v-toolbar-title>
