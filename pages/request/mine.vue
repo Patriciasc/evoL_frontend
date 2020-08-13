@@ -37,12 +37,13 @@
                   <v-icon color="green">mdi-progress-check</v-icon>
                   <span>¡{{ request.state }}!</span>
                   <span
-                    >{{ request.userId.name }} ha aceptado tu solicitud.</span
+                    >{{ request.itemId.owner.name }} ha aceptado tu
+                    solicitud.</span
                   >
                   <v-divider></v-divider>
                   <p>Datos de contacto:</p>
-                  {{ request.userId.email }}
-                  {{ request.userId.telephone }}
+                  {{ request.itemId.owner.email }}
+                  {{ request.itemId.owner.telephone }}
                 </div>
 
                 <div v-else-if="request.state === 'En espera'">
@@ -128,6 +129,7 @@ export default {
   created() {
     RequestService.getMyRequests()
       .then((requests) => {
+        console.log(requests)
         this.userRequests = requests
       })
       .catch((error) => console.error(error))
