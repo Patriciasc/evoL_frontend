@@ -47,7 +47,10 @@
 
                 <div v-else-if="request.state === 'En espera'">
                   <v-icon color="orange">mdi-progress-clock</v-icon>
-                  <span>{{ request.state }}</span>
+                  <span
+                    >{{ request.state }}. Te avisaremos, desde que el dueño
+                    conteste a tu solicitud.
+                  </span>
                 </div>
 
                 <div v-else-if="request.state === 'Denegado'">

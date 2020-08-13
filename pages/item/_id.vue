@@ -1,102 +1,108 @@
 <template>
-  <v-container class="fill-height" fluid>
-    <v-card class="mx-auto" max-width="500px">
-      <v-img class="mt-5" contain height="300px" :src="imageURL"> </v-img>
+  <v-container fluid>
+    <v-col cols="12" md="8" class="mx-auto">
+      <v-card>
+        <v-img class="mt-5" contain height="300px" :src="imageURL"> </v-img>
 
-      <v-card-title> {{ title }}</v-card-title>
+        <v-card-title> {{ title }}</v-card-title>
 
-      <v-card-text>
-        <div class="grey--text">{{ category }}</div>
+        <v-card-text>
+          <div class="grey--text">{{ category }}</div>
 
-        <div class="my-4 subtitle-1">{{ price }} €</div>
+          <div class="my-4 subtitle-1">{{ price }} €</div>
 
-        <div>Estado: {{ state }}</div>
+          <div>Estado: {{ state }}</div>
 
-        <div>{{ description }}</div>
-      </v-card-text>
+          <div>{{ description }}</div>
+        </v-card-text>
 
-      <div v-if="!isYourItem">
-        <v-divider class="mx-4"></v-divider>
-        <div v-if="userIsLoggedIn" class="explanation mt-5">
-          <v-card-title>¿Por qué lo necesitas?</v-card-title>
-          <v-card-text>
-            <v-text-field
-              v-model="comment"
-              type="text"
-              label="Explica por qué lo necesitas"
-              :counter="100"
-              required
-              :error-messages="commentErrors"
-              @input="$v.comment.$touch()"
-              @blur="$v.comment.$touch()"
-            ></v-text-field>
-          </v-card-text>
-        </div>
-
-        <v-card-actions>
-          <v-btn text nuxt to="/"> Volver </v-btn>
-          <v-btn text nuxt color="primary" class="mr-4" @click="requestAnItem"
-            >Solicitar</v-btn
-          >
-        </v-card-actions>
-      </div>
-
-      <div v-if="isYourItem">
-        <v-divider class="mx-4"></v-divider>
-        <div>
-          <div v-if="assignedTo">
-            <v-card-text
-              >Ya has elegido a quién darle éste artículo. Espera a que se ponga
-              en contacto contigo para que se pongan de acuerdo sobre la
-              entrega.
-            </v-card-text>
-          </div>
-          <div v-else>
-            <v-card-title
-              >Personas interesadas: {{ requests.length }}
-            </v-card-title>
-            <v-card-text v-if="requests.length > 0">
-              Elige a quién quieres entregarle el artículo.
-            </v-card-text>
+        <div v-if="!isYourItem">
+          <v-divider class="mx-4"></v-divider>
+          <div v-if="userIsLoggedIn" class="explanation mt-5">
+            <v-card-title>¿Por qué lo necesitas?</v-card-title>
             <v-card-text>
-              <div v-for="(request, idx) in requests" :key="idx">
-                <span class="font-weight-black">{{ request.userId.name }}</span>
-                <p>{{ request.comment }}</p>
-                <div align="center" justify="center">
-                  <v-icon large @click="updateRequestState(request._id)">
-                    mdi-thumb-up-outline
-                  </v-icon>
-                </div>
-              </div>
+              <v-text-field
+                v-model="comment"
+                type="text"
+                label="Explica por qué lo necesitas"
+                :counter="100"
+                required
+                :error-messages="commentErrors"
+                @input="$v.comment.$touch()"
+                @blur="$v.comment.$touch()"
+              ></v-text-field>
             </v-card-text>
-            <v-divider class="mx-4"></v-divider>
           </div>
-        </div>
-        <v-card-actions v-if="requests.length === 0">
-          <v-dialog v-model="dialog" persistent max-width="290">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" v-bind="attrs" icon v-on="on">
-                <v-icon>mdi-trash-can-outline</v-icon>
-              </v-btn>
-              <v-btn v-if="!assignedTo" color="primary" icon>
-                <v-icon>mdi-pencil-outline</v-icon>
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title class="headline">Eliminar publicación</v-card-title>
-              <v-card-text>
-                ¿Quieres eliminar ésta publicación?
-              </v-card-text>
 
-              <v-card-actions>
-                <v-btn color="accent" text @click="dialog = false">No</v-btn>
-                <v-btn color="primary" text @click="removeItemById">Sí</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-card-actions>
-      </div>
-    </v-card>
+          <v-card-actions>
+            <v-btn text nuxt to="/"> Volver </v-btn>
+            <v-btn text nuxt color="primary" class="mr-4" @click="requestAnItem"
+              >Solicitar</v-btn
+            >
+          </v-card-actions>
+        </div>
+
+        <div v-if="isYourItem">
+          <v-divider class="mx-4"></v-divider>
+          <div>
+            <div v-if="assignedTo">
+              <v-card-text
+                >Ya has elegido a quién darle éste artículo. Espera a que se
+                ponga en contacto contigo para que se pongan de acuerdo sobre la
+                entrega.
+              </v-card-text>
+            </div>
+            <div v-else>
+              <v-card-title
+                >Personas interesadas: {{ requests.length }}
+              </v-card-title>
+              <v-card-text v-if="requests.length > 0">
+                Elige a quién quieres entregarle el artículo.
+              </v-card-text>
+              <v-card-text>
+                <div v-for="(request, idx) in requests" :key="idx">
+                  <span class="font-weight-black">{{
+                    request.userId.name
+                  }}</span>
+                  <p>{{ request.comment }}</p>
+                  <div align="center" justify="center">
+                    <v-icon large @click="updateRequestState(request._id)">
+                      mdi-thumb-up-outline
+                    </v-icon>
+                  </div>
+                </div>
+              </v-card-text>
+              <v-divider class="mx-4"></v-divider>
+            </div>
+          </div>
+          <v-card-actions v-if="requests.length === 0">
+            <v-dialog v-model="dialog" persistent max-width="290">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="primary" v-bind="attrs" icon v-on="on">
+                  <v-icon>mdi-trash-can-outline</v-icon>
+                </v-btn>
+                <v-btn v-if="!assignedTo" color="primary" icon>
+                  <v-icon>mdi-pencil-outline</v-icon>
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title class="headline"
+                  >Eliminar publicación</v-card-title
+                >
+                <v-card-text>
+                  ¿Quieres eliminar ésta publicación?
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-btn color="accent" text @click="dialog = false">No</v-btn>
+                  <v-btn color="primary" text @click="removeItemById">Sí</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-card-actions>
+        </div>
+      </v-card>
+    </v-col>
 
     <!--
     <v-row align="center" justify="center">
@@ -251,7 +257,6 @@ export default {
   },
   methods: {
     requestAnItem() {
-      console.log('requestAnItem')
       if (this.userIsLoggedIn) {
         this.$v.$touch()
 
@@ -262,7 +267,6 @@ export default {
             comment: this.comment,
             itemId: this.$route.params.id,
           }
-          console.log(newRequest)
           RequestService.addRequest(newRequest)
             .then((request) => {
               console.log(request)
