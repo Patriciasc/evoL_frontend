@@ -109,15 +109,18 @@ export default {
 
         UserService.login(loginInfo)
           .then((response) => {
-            localStorage.setItem('name', response.data.name)
-            localStorage.setItem('email', response.data.email)
-            localStorage.setItem('token', response.data.token)
-            this.$nuxt.$emit('userIsLoggedIn', true)
-            window.location.href = '/'
-            // this.$router.push(`/`)
+            if (response.data.error) {
+              this.snackbar = true
+            } else {
+              localStorage.setItem('name', response.data.name)
+              localStorage.setItem('email', response.data.email)
+              localStorage.setItem('token', response.data.token)
+              // this.$nuxt.$emit('userIsLoggedIn', true)
+              window.location.href = '/'
+              // this.$router.push(`/`)
+            }
           })
           .catch((error) => {
-            this.snackbar = true
             console.error(error)
           })
       }

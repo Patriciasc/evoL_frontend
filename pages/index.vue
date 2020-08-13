@@ -80,13 +80,13 @@ export default {
     },
     onTabChanged(tab) {
       this.items = null
-      this.$router.push({ path: '/', query: { category: tab } })
       this.getItems(tab)
     },
     getItems(tab) {
       ItemService.getItems(tab)
         .then((items) => {
           this.items = items
+          this.$router.push({ path: '/', query: { category: tab } })
         })
         .catch((error) => console.error(error))
     },

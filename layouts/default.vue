@@ -181,9 +181,7 @@ export default {
   },
   methods: {
     userLogOut() {
-      localStorage.removeItem('name')
-      localStorage.removeItem('email')
-      localStorage.removeItem('token')
+      localStorage.clear()
       location.reload()
       this.$router.push(`/`)
     },

@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height" fluid>
-    <v-card class="mx-auto" max-width="500">
+    <v-card class="mx-auto" max-width="500px">
       <v-img class="mt-5" contain height="300px" :src="imageURL"> </v-img>
 
       <v-card-title> {{ title }}</v-card-title>
