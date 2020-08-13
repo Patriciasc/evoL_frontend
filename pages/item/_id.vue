@@ -288,7 +288,7 @@ export default {
       RequestService.updateRequest(request)
         .then((response) => {
           console.log(response)
-          location.reload()
+          this.assignedTo = true
         })
         .catch((error) => console.error(error))
     },
