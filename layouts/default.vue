@@ -98,12 +98,12 @@
 
     <v-bottom-navigation fixed class="hidden-lg-and-up">
       <v-btn nuxt to="/">
-        <span>BUSCAR</span>
+        BUSCAR
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
       <v-btn v-if="userIsLoggedIn" nuxt to="/item/mine">
-        <span>MIS COSAS</span>
+        MIS COSAS
         <v-icon>mdi-thumbs-up-down</v-icon>
       </v-btn>
 
@@ -115,14 +115,14 @@
       </v-btn>
 
       <v-btn v-if="userIsLoggedIn" nuxt to="/request/mine">
-        <span>DESEOS</span>
+        DESEOS
         <v-icon>mdi-heart-outline</v-icon>
       </v-btn>
 
       <v-menu top offset-y>
         <template v-slot:activator="{ on }">
           <v-btn v-on="on">
-            <span>PERFIL</span>
+            PERFIL
             <v-icon>mdi-account-circle-outline</v-icon>
           </v-btn>
         </template>
