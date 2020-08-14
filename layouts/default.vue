@@ -97,53 +97,55 @@
     </v-main>
 
     <v-bottom-navigation fixed class="hidden-lg-and-up">
-      <v-btn nuxt to="/">
-        BUSCAR
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+      <div class="py-2">
+        <v-btn nuxt to="/">
+          BUSCAR
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
 
-      <v-btn v-if="userIsLoggedIn" nuxt to="/item/mine">
-        MIS COSAS
-        <v-icon>mdi-thumbs-up-down</v-icon>
-      </v-btn>
+        <v-btn v-if="userIsLoggedIn" nuxt to="/item/mine">
+          MIS COSAS
+          <v-icon>mdi-thumbs-up-down</v-icon>
+        </v-btn>
 
-      <v-btn v-if="!userIsLoggedIn" nuxt to="/auth/login">
-        <v-icon color="primary" x-large>mdi-plus-circle</v-icon>
-      </v-btn>
-      <v-btn v-else nuxt to="/item/new">
-        <v-icon color="primary" x-large>mdi-plus-circle</v-icon>
-      </v-btn>
+        <v-btn v-if="!userIsLoggedIn" nuxt to="/auth/login">
+          <v-icon color="primary" x-large>mdi-plus-circle</v-icon>
+        </v-btn>
+        <v-btn v-else nuxt to="/item/new">
+          <v-icon color="primary" x-large>mdi-plus-circle</v-icon>
+        </v-btn>
 
-      <v-btn v-if="userIsLoggedIn" nuxt to="/request/mine">
-        DESEOS
-        <v-icon>mdi-heart-outline</v-icon>
-      </v-btn>
+        <v-btn v-if="userIsLoggedIn" nuxt to="/request/mine">
+          DESEOS
+          <v-icon>mdi-heart-outline</v-icon>
+        </v-btn>
 
-      <v-menu top offset-y>
-        <template v-slot:activator="{ on }">
-          <v-btn v-on="on">
-            PERFIL
-            <v-icon>mdi-account-circle-outline</v-icon>
-          </v-btn>
-        </template>
+        <v-menu top offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on">
+              PERFIL
+              <v-icon>mdi-account-circle-outline</v-icon>
+            </v-btn>
+          </template>
 
-        <v-list>
-          <div v-if="!userIsLoggedIn">
-            <v-list-item dense nuxt to="/auth/login">
-              <v-list-item-title
-                ><v-icon>mdi-login</v-icon>Login</v-list-item-title
-              >
-            </v-list-item>
-          </div>
-          <div v-else>
-            <v-list-item dense @click="userLogOut">
-              <v-list-item-title
-                ><v-icon>mdi-logout</v-icon>Logout</v-list-item-title
-              >
-            </v-list-item>
-          </div>
-        </v-list>
-      </v-menu>
+          <v-list>
+            <div v-if="!userIsLoggedIn">
+              <v-list-item dense nuxt to="/auth/login">
+                <v-list-item-title
+                  ><v-icon>mdi-login</v-icon>Login</v-list-item-title
+                >
+              </v-list-item>
+            </div>
+            <div v-else>
+              <v-list-item dense @click="userLogOut">
+                <v-list-item-title
+                  ><v-icon>mdi-logout</v-icon>Logout</v-list-item-title
+                >
+              </v-list-item>
+            </div>
+          </v-list>
+        </v-menu>
+      </div>
     </v-bottom-navigation>
 
     <v-footer padless class="hidden-md-and-down">
