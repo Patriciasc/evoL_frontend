@@ -39,7 +39,7 @@
               align="center"
               justify="center"
               class="font-weight-bold"
-              v-text="element.request.length + ' interesados'"
+              v-text="element.request.length + ' interesado(s)'"
             ></p>
           </div>
           <div v-else>

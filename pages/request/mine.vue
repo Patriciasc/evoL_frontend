@@ -129,7 +129,6 @@ export default {
   created() {
     RequestService.getMyRequests()
       .then((requests) => {
-        console.log(requests)
         this.userRequests = requests
       })
       .catch((error) => console.error(error))

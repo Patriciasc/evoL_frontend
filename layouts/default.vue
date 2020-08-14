@@ -146,13 +146,11 @@
       </v-menu>
     </v-bottom-navigation>
 
-    <template>
-      <v-footer padless>
-        <v-col class="text-center hidden-md-and-down" cols="12">
-          &copy; {{ new Date().getFullYear() }} — <strong>psc</strong>
-        </v-col>
-      </v-footer>
-    </template>
+    <v-footer padless class="hidden-md-and-down">
+      <v-col class="text-center" cols="12">
+        &copy; {{ new Date().getFullYear() }} — <strong>psc</strong>
+      </v-col>
+    </v-footer>
   </v-app>
 </template>
 
