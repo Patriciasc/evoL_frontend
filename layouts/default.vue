@@ -97,7 +97,7 @@
     </v-main>
 
     <v-bottom-navigation fixed class="hidden-lg-and-up">
-      <div class="my-2">
+      <div class="mt-2">
         <v-btn nuxt to="/">
           BUSCAR
           <v-icon>mdi-magnify</v-icon>
