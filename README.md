@@ -1,4 +1,4 @@
-# evoL_frontend
+# evoL frontend
 ## What is evoL?
 *evoL*ution with *Love*. *evoL* is the online place where you can publish to reuse almost anything, make someone happy and make you happy, buy at a lower price something you need or give away something you no longer need, put your life in order! What for you may be something without utility, for another person may be a treasure.
 
@@ -32,3 +32,6 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## evoL Backend
+https://github.com/Patriciasc/evoL_backend
